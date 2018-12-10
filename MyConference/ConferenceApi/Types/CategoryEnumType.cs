@@ -1,4 +1,5 @@
-﻿using ConferenceApi.Models;
+﻿using ConferenceApi.Domain;
+using ConferenceApi.Models;
 using GraphQL.Types;
 using System;
 using System.Collections.Generic;
