@@ -11,6 +11,7 @@ namespace ConferenceApi.Types
         public ConferenceInputType()
         {
             Name = "ConferenceInput";
+            Field<NonNullGraphType<IdGraphType>>("id");
             Field<NonNullGraphType<StringGraphType>>("name");
             Field<StringGraphType>("url");
             Field<StringGraphType>("location");

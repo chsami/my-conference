@@ -11,5 +11,8 @@ namespace ConferenceApi.Store
         Task<List<Conference>> GetAllConferencesAsync();
         Task<Conference> GetConferenceAsync(Guid Id);
         Task<Guid> AddConferenceAsync(Conference conference);
+        Task<Guid> DeleteConferenceAsync(Guid Id);
+        Task<Guid> EditConferenceAsync(Conference conference);
+
     }
 }

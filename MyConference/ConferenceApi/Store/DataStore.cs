@@ -34,8 +34,37 @@ namespace ConferenceApi.Store
         {
             conference.Date = DateTime.UtcNow;
             var conferenceAdded = await _conferenceContext.Conference.AddAsync(conference);
+
             await _conferenceContext.SaveChangesAsync();
+
             return conferenceAdded.Entity.Id;
+        }
+
+        public async Task<Guid> DeleteConferenceAsync(Guid Id)
+        {
+            var conferenceToDelete = await _conferenceContext.Conference.FirstOrDefaultAsync(x => x.Id == Id);
+            if (conferenceToDelete != null)
+            {
+                _conferenceContext.Conference.Remove(conferenceToDelete);
+                await _conferenceContext.SaveChangesAsync();
+            }
+            return conferenceToDelete.Id;
+        }
+
+        public async Task<Guid> EditConferenceAsync(Conference conference)
+        {
+            var conferenceToEdit = await _conferenceContext.Conference.FirstOrDefaultAsync(x => x.Id == conference.Id);
+            //automapper here?
+            conferenceToEdit.Name = conference.Name;
+            conferenceToEdit.Url = conference.Url;
+            conferenceToEdit.Location = conference.Location;
+            conferenceToEdit.Category = conference.Category;
+
+            var conferenceUpdated = _conferenceContext.Conference.Update(conferenceToEdit);
+
+            await _conferenceContext.SaveChangesAsync();
+
+            return conferenceUpdated.Entity.Id;
         }
     }
 }
