@@ -1,4 +1,4 @@
-﻿using ConferenceApi.Models;
+﻿using ConferenceApi.Domain;
 using ConferenceApi.Store;
 using ConferenceApi.Types;
 using GraphQL.Types;
@@ -16,11 +16,11 @@ namespace ConferenceApi.Mutations
             Field<IdGraphType>(
                    "addConference",
                    arguments: new QueryArguments(
-                       new QueryArgument<NonNullGraphType<ConferenceInputType>> { Name = "conferencelol" }
+                       new QueryArgument<NonNullGraphType<ConferenceInputType>> { Name = "conference" }
                    ),
                    resolve: context =>
                    {
-                       var conference = context.GetArgument<Conference>("conferencelol");
+                       var conference = context.GetArgument<Conference>("conference");
                        return dataStore.AddConferenceAsync(conference);
                    });
         }

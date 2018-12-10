@@ -1,4 +1,4 @@
-﻿using ConferenceApi.Models;
+﻿using ConferenceApi.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

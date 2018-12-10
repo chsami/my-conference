@@ -72,7 +72,7 @@ namespace ConferenceApi
                 app.UseDeveloperExceptionPage();
             }
 
-            //new ApplicationDatabaseInitializer().SeedAsync(app).GetAwaiter();
+            new ApplicationDatabaseInitializer().SeedAsync(app).GetAwaiter();
 
             app.UseMvc();
 
