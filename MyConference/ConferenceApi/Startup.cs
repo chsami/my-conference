@@ -57,6 +57,9 @@ namespace ConferenceApi
             services.AddScoped<ConferenceType>();
             services.AddScoped<ConferenceInputType>();
             services.AddScoped<CategoryEnumType>();
+            services.AddScoped<LocationType>();
+            services.AddScoped<AddressType>();
+
 
 
 
