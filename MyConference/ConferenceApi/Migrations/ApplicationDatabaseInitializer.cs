@@ -23,8 +23,8 @@ namespace ConferenceApi.Migrations
 
                 var items = new List<Conference>
             {
-                new Conference { Id = Guid.NewGuid(), Category = Category.FRONTEND, Name = "NG-BE", Date = DateTime.UtcNow, Location = "Gent", Url = "https://www.ng-be.org"},
-                new Conference { Id = Guid.NewGuid(), Category = Category.BACKEND, Name = "Techorama", Date = DateTime.UtcNow, Location = "Antwerp", Url = "https://www.techorama.be"}
+                new Conference { Id = Guid.NewGuid(), Category = Category.FRONTEND, Name = "NG-BE", Date = DateTime.UtcNow, Location = new Location() { }, Url = "https://www.ng-be.org"},
+                new Conference { Id = Guid.NewGuid(), Category = Category.BACKEND, Name = "Techorama", Date = DateTime.UtcNow, Location = new Location() { }, Url = "https://www.techorama.be"}
             };
 
                 await applicationDbContext.Conference.AddRangeAsync(items);
