@@ -54,6 +54,11 @@ namespace ConferenceApi.Store
         public async Task<Guid> EditConferenceAsync(Conference conference)
         {
             var conferenceToEdit = await _conferenceContext.Conference.FirstOrDefaultAsync(x => x.Id == conference.Id);
+            if (conferenceToEdit == null)
+            {
+                // conference not found exception
+            }
+
             //automapper here?
             conferenceToEdit.Name = conference.Name;
             conferenceToEdit.Url = conference.Url;

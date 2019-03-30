@@ -7,6 +7,8 @@ using ConferenceApi.Models;
 using ConferenceApi.Mutations;
 using ConferenceApi.Queries;
 using ConferenceApi.Schemas;
+using ConferenceApi.Schemas.Mutations;
+using ConferenceApi.Schemas.Queries;
 using ConferenceApi.Store;
 using ConferenceApi.Types;
 using GraphiQl;
@@ -41,27 +43,33 @@ namespace ConferenceApi
             services.AddDbContext<ConferenceContext>(options =>
                 options.UseSqlServer(Configuration.GetValue<string>("ConnectionStrings:DefaultConnection")));
 
-            //GRAPHQL STUFF
-            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddSingleton<IContextProvider, ContextProvider>();
 
+            // GRAPHQL STUFF
+            services.AddSingleton<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddSingleton<IDocumentWriter, DocumentWriter>();
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
-
             services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
             services.AddSingleton<DataLoaderDocumentListener>();
 
-            services.AddScoped<ConferenceQuery>();
-            services.AddScoped<ConferenceMutation>();
-            services.AddScoped<ISchema, ConferenceSchema>();
+            // GRAPHQL QUERIES
+            services.AddSingleton<RootQuery>();
+            services.AddSingleton<ConferenceQuery>();
 
-            services.AddScoped<ConferenceType>();
-            services.AddScoped<ConferenceInputType>();
-            services.AddScoped<CategoryEnumType>();
+            // GRAPQHL MUTATIONS
+            services.AddSingleton<RootMutation>();
+            services.AddSingleton<ConferenceMutation>();
 
+            //GRAPHQL SCHEMA
+            services.AddSingleton<ISchema, ConferenceSchema>();
 
+            // GRAPHQL TYPES
+            services.AddSingleton<ConferenceType>();
+            services.AddSingleton<ConferenceInputType>();
+            services.AddSingleton<CategoryEnumType>();
 
             //DATA LAYER
-            services.AddScoped<IDatastore, DataStore>();
+            services.AddTransient<IDatastore, DataStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

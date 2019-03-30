@@ -1,4 +1,5 @@
 ﻿using ConferenceApi.Domain;
+using ConferenceApi.Schemas;
 using ConferenceApi.Store;
 using ConferenceApi.Types;
 using GraphQL.Types;
@@ -11,8 +12,12 @@ namespace ConferenceApi.Mutations
 {
     public class ConferenceMutation : ObjectGraphType
     {
-        public ConferenceMutation(IDatastore dataStore)
+        private readonly IContextProvider _contextProvider;
+
+        public ConferenceMutation(IContextProvider contextProvider)
         {
+            _contextProvider = contextProvider;
+
             Field<IdGraphType>(
                    "addConference",
                    arguments: new QueryArguments(
@@ -21,6 +26,7 @@ namespace ConferenceApi.Mutations
                    resolve: context =>
                    {
                        var conference = context.GetArgument<Conference>("conference");
+                       var dataStore = _contextProvider.Get<IDatastore>();
                        return dataStore.AddConferenceAsync(conference);
                    });
 
@@ -32,6 +38,7 @@ namespace ConferenceApi.Mutations
                    resolve: context =>
                    {
                        var conferenceId = context.GetArgument<Guid>("id");
+                       var dataStore = _contextProvider.Get<IDatastore>();
                        return dataStore.DeleteConferenceAsync(conferenceId);
                    });
 
@@ -43,6 +50,7 @@ namespace ConferenceApi.Mutations
                   resolve: context =>
                   {
                       var conference = context.GetArgument<Conference>("conference");
+                      var dataStore = _contextProvider.Get<IDatastore>();
                       return dataStore.EditConferenceAsync(conference);
                   });
         }
